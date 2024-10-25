@@ -8,7 +8,7 @@ class GetPostUseCase{
 
   GetPostUseCase(this.postRepository);
 
-  Either<Failure,List<PostEntity>>  call(){
+  Future<Either<Failure,List<PostEntity>>>  call(){
     return postRepository.getPosts();
   }
 }

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_post_appilcation/clean_code/data/data_source/post_data_source.dart';
+import 'package:riverpod_post_appilcation/clean_code/data/models/post_model.dart';
 import 'package:riverpod_post_appilcation/clean_code/data/repositories/post_repository_imp.dart';
 import 'package:riverpod_post_appilcation/clean_code/domain/entites/failure.dart';
 import 'package:riverpod_post_appilcation/clean_code/domain/entites/post_entity.dart';
@@ -29,8 +31,9 @@ class PostNotifier extends StateNotifier<List<PostEntity>> {
   final DeletePostUseCase deletePostUseCase;
   final UpdatePostUseCase updatePostUseCase;
 
-  void loadPosts() {
-    final result = getPostUseCase();
+  void loadPosts() async{
+    final result = await getPostUseCase();
+
     result.fold(
           (failure) {
         // Handle failure (e.g., show a message)
@@ -40,10 +43,12 @@ class PostNotifier extends StateNotifier<List<PostEntity>> {
         state = posts;
       },
     );
+
+
   }
 
-  void createPost(PostEntity post) {
-    final result = addPostUseCase(post);
+  void createPost(PostEntity post) async{
+    final result = await addPostUseCase(post);
     result.fold(
           (failure) {
         Failure(message: "faild");
@@ -56,10 +61,8 @@ class PostNotifier extends StateNotifier<List<PostEntity>> {
   }
 
   void updatePost(PostEntity post, {WidgetRef? ref}) async {
-    if (ref != null)
-      ref.read(resultStateProvider.notifier).state =
-          ResultState('', isLoading: true);
-    final result = updatePostUseCase(post);
+    if (ref != null) ref.read(resultStateProvider.notifier).state = ResultState('', isLoading: true);
+    final result = await updatePostUseCase(post);
     result.fold(
           (failure) {
         Failure(message: 'Failed');
@@ -80,7 +83,7 @@ class PostNotifier extends StateNotifier<List<PostEntity>> {
     if (ref != null) ref.read(resultStateProvider.notifier).state = ResultState('', isLoading: true);
 
     isLoading = true;
-    final result = deletePostUseCase(id);
+    final result = await deletePostUseCase(id);
 
     result.fold((failure) {
       Failure(message: "faild");
@@ -105,7 +108,7 @@ class PostNotifier extends StateNotifier<List<PostEntity>> {
 }
 
 final postRepositoryProvider = Provider<PostRepository>((ref) {
-  return PostRepositoryImp();
+  return PostRepositoryImp(PostDataSource());
 });
 
 final postProvider =

@@ -2,20 +2,21 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_post_appilcation/clean_code/data/models/post_model.dart';
 import 'package:riverpod_post_appilcation/clean_code/domain/entites/post_entity.dart';
 import 'package:riverpod_post_appilcation/clean_code/presentaion/providers/post_provider.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class ClPostFormScreen extends ConsumerStatefulWidget {
+class PostFormScreen extends ConsumerStatefulWidget {
   final PostEntity? post;
 
-  ClPostFormScreen({this.post});
+  PostFormScreen({this.post});
 
   @override
   _PostFormScreenState createState() => _PostFormScreenState();
 }
 
-class _PostFormScreenState extends ConsumerState<ClPostFormScreen> {
+class _PostFormScreenState extends ConsumerState<PostFormScreen> {
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   late FormGroup form, customForm;
@@ -35,7 +36,7 @@ class _PostFormScreenState extends ConsumerState<ClPostFormScreen> {
         ],
       ),
       'desc': FormControl<String>(
-        value: widget.post?.desc,
+        value: widget.post?.body,
         validators: [
           Validators.compose([
             Validators.required,
@@ -43,7 +44,7 @@ class _PostFormScreenState extends ConsumerState<ClPostFormScreen> {
         ],
       ),
       'email': FormControl<String>(
-        value: widget.post?.email,
+        value: widget.post?.body,
         validators: [
           Validators.compose([Validators.required,
           //  Validators.email
@@ -138,10 +139,10 @@ class _PostFormScreenState extends ConsumerState<ClPostFormScreen> {
                             final fbId =
                                 widget.post?.id ?? DateTime.now().toString();
                             final post = PostEntity(
+                                userId: fbEmail,
                                 id: fbId,
                                 title: fbTitle,
-                                desc: fbDesc,
-                                email: fbEmail);
+                                body: fbDesc);
 
                             if (widget.post == null) {
                               ref.read(postProvider.notifier).createPost(post);

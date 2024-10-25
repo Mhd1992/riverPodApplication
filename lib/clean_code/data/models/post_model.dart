@@ -1,6 +1,29 @@
-
+/*
 import 'package:riverpod_post_appilcation/clean_code/domain/entites/post_entity.dart';
 
 class PostModel extends PostEntity {
-  PostModel({required super.id, required super.title, required super.desc,required super.email});
+  PostModel(
+      {required super.userId,
+      required super.id,
+      required super.title,
+      required super.body});
+
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    return PostModel(
+        userId: json['userId'],
+        id: json['id'],
+        title: json['title'],
+        body: json['body']);
+  }
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'id': id,
+      'title': title,
+      'body': body
+    };
+  }
 }
+*/

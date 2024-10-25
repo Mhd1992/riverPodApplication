@@ -12,7 +12,7 @@ class PostListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(post.title),
-      subtitle: Text(post.desc),
+      subtitle: Text(post.body),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: onDelete,
