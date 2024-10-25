@@ -13,18 +13,18 @@ class PostRepositoryImp implements PostRepository {
     try {
       _posts.add(PostModel(
           id: post.id, title: post.title, desc: post.desc, email: post.email));
-      return Right(Success("the post add Done!"));
+      return Right(Success(message: "the post add Done!"));
     } catch (e) {
-      return Left(Failure("$e"));
+      return Left(Failure(message: "$e"));
     }
   }
   @override
   Either<Failure, Success> deletePost(String postId) {
     try {
       _posts.removeWhere((post) => post.id == postId);
-      return Right(Success("Delete is Done"));
+      return Right(Success(message: "Delete is Done"));
     } catch (e) {
-      return Left(Failure("$e"));
+      return Left(Failure(message: "$e"));
     }
   }
   @override
@@ -32,7 +32,7 @@ class PostRepositoryImp implements PostRepository {
     try {
       return Right(List.unmodifiable(_posts));
     } catch (e) {
-      return Left(Failure("$e"));
+      return Left(Failure(message: "$e"));
     }
   }
   @override
@@ -42,11 +42,11 @@ class PostRepositoryImp implements PostRepository {
       if (index != -1) {
         _posts[index] = PostModel(
             id: post.id, title: post.title, desc: post.desc, email: post.email);
-        return Right(Success("update is Done!"));
+        return Right(Success(message: "update is Done!"));
       }
-      return Left(Failure("the element is notFound"));
+      return Left(Failure(message: "the element is notFound"));
     } catch (e) {
-      return Left(Failure("$e"));
+      return Left(Failure(message: "$e"));
     }
   }
 }
