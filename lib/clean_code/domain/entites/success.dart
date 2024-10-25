@@ -1,6 +1,6 @@
 class Success {
   final String message;
 
-  Success(this.message);
+  Success({required this.message});
 
 }
