@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'clean_code/presentaion/screens/home_screen.dart';
+import 'clean_code/presentaion/screens/post_home_screen_two.dart';
 
 void main() {
   runApp(
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RiverPod Example',
-      home: HomeScreen(),
+      home: PostsListScreen(),
+   //   home: HomeScreen(),
       // home: PPostScreen(),
     );
   }
